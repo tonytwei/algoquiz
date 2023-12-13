@@ -1,10 +1,8 @@
-import Image from 'next/image';
-import Header from '../../components/Header';
-import React from "react"
+import Header from '../../components/Header'
 
-export default function App() {
+export default function Home() {
   return (
-    <main className="flex flex-col bg-stone-200 h-screen">
+    <main className="flex flex-col bg-neutral-700 h-screen">
       <Header />
       <h1>TODO: build quiz page</h1>
     </main>
