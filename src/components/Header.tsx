@@ -26,7 +26,7 @@ export default function Header() {
                         height={48}
                         priority={true}
                     />
-                    <h1 className="text-4xl text-stone-300">AlgoQuiz</h1>
+                    {/* <h1 className="text-4xl text-stone-300">AlgoQuiz</h1> */}
                 </div>
             </Link>
             <div className="flex flex-row items-center">
@@ -68,13 +68,13 @@ export default function Header() {
                         </button>
                     </li>
                     <li>
-                        <Link href="/"><h1 className="text-xl text-stone-300">HOME</h1></Link>
+                        <Link href="/"><h1 className="text-xl text-stone-300 font-medium">HOME</h1></Link>
                     </li>
                     <li>
-                        <Link href="/quiz"><h1 className="text-xl text-stone-300">PRACTICE</h1></Link>
+                        <Link href="/quiz"><h1 className="text-xl text-stone-300 font-medium">PRACTICE</h1></Link>
                     </li>
                     <li>
-                        <Link href="/account"><h1 className="text-xl text-teal-300 outline rounded-sm outline-offset-4 outline-2 outline-teal-300">ACCOUNT</h1></Link>
+                        <Link href="/account"><h1 className="text-xl text-teal-300 font-medium outline rounded-sm outline-offset-4 outline-2 outline-teal-300">ACCOUNT</h1></Link>
                     </li>
                 </ul>
             </div>

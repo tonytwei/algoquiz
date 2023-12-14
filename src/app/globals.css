@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .checkbox {
+    @apply appearance-none w-4 h-4;
+  }
+  .checkbox-unchecked {
+    @apply  bg-white border-2 border-solid border-gray-400 rounded-md transition;
+  }
+  .checkbox-checked-green {
+    @apply checked:bg-accent-lime checked:border-accent-dark-lime;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
