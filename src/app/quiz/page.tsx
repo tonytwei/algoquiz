@@ -22,15 +22,19 @@ interface QuestionFilter {
   set: String;
 }
 
-
-async function GetData() {
-  const res = await fetch("../api/hello")
-  const data = await res.json()
-  console.log(data)
-  return 0;
-}
-
 export default function Home() {
+  const makeApiCallA = async () => {
+    await fetch('/api/hello', {
+      method: 'POST',
+      body: JSON.stringify({ hello: 'worldA' }),
+    })
+  }
+  const makeApiCallB = async () => {
+    await fetch('/api/question/55', {
+      method: 'GET'
+    })
+  }
+
   const { register, handleSubmit, reset } = useForm<QuestionFilter>({
     defaultValues: {
       set: "all"
@@ -79,18 +83,21 @@ export default function Home() {
   const sets: Array<string> = [
     "all",
     "custom",
+    "saved",
+    "completed",
     "gdsc-array"
   ];
   const setMap = new Map<String, String>([
     ["all", "All"],
     ["custom", "Custom"],
+    ["saved", "Saved"],
+    ["completed", "Completed"],
     ["gdsc-array", "GDSC: Array"],
   ]);
 
   return (
     <main className="flex flex-col bg-neutral-700 h-screen">
       <Header />
-      
       {/* quiz container */}
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row w-screen h-max">
         {/* quiz filter */}
@@ -129,10 +136,8 @@ export default function Home() {
         
         {/* quiz window */}
         <div>
-          <button type="button" onClick={() => {
-            console.log("API TEST")
-            GetData()
-          }}>asd</button>
+          <button type="button" onClick={makeApiCallA}>/api/hello POST</button>
+          <button type="button" onClick={makeApiCallB}>/api/question/55</button>
         </div>
       </form>
     </main>
