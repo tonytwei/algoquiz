@@ -1,31 +1,28 @@
 import { NextResponse, NextRequest } from 'next/server';
 
 const sampleData = {
-  "id": "76",
+  "id": 76,
   "title": "76. Minimum Window Substring",
-  "difficulty": "Hard",
+  "difficulty": "hard",
   "topics": [
-    "Arrays",
-    "Two Pointers",
-    "Sliding Window"
+    "array",
+    "twoPointers",
+    "slidingWindow"
   ],
   "sets" : [],
   "description": "Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string \"\".\n\nThe testcases will be generated such that the answer is unique.",
   "examples": [
     {
       "input": "s = \"ADOBECODEBANC\", t = \"ABC\"",
-      "output": "\"BANC\"",
-      "explanation": "The minimum window substring \"BANC\" includes 'A', 'B', and 'C' from string t."
+      "output": "\"BANC\""
     },
     {
       "input": "s = \"a\", t = \"a\"",
-      "output": "\"a\"",
-      "explanation": "The entire string s is the minimum window."
+      "output": "\"a\""
     },
     {
       "input": "s = \"a\", t = \"aa\"",
-      "output": "\"\"",
-      "explanation": "Both 'a's from t must be included in the window. Since the largest window of s only has one 'a', return the empty string."
+      "output": "\"\""
     }
   ],
   "constraints": [
@@ -37,12 +34,12 @@ const sampleData = {
   "questions": [
     {
       "questionText": "Question 1",
-      "answer": "0",
+      "answer": 1,
       "options": ["0","1","2","3"]
     },
     {
       "questionText": "Question 2",
-      "answer": "0",
+      "answer": 2,
       "options": ["0","1","2","3"]
     }
   ]

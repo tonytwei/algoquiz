@@ -15,15 +15,15 @@ export default function Header() {
     }
 
     return (
-        <header className="h-max w-screen flex flex-row align-middle justify-between py-5 px-10 bg-neutral-800">
+        <header className="h-max w-full flex flex-row align-middle justify-between py-5 px-10 bg-neutral-800">
             {/* logo icon, logo text */}
             <Link href="/">
                 <div className="flex flex-row marker items-center gap-3">
                     <Image 
                         src="/images/header/logo.png"
                         alt="Algoquiz Logo"
-                        width={48}
-                        height={48}
+                        width="48"
+                        height="48"
                         priority={true}
                     />
                     {/* <h1 className="text-4xl text-stone-300">AlgoQuiz</h1> */}
@@ -55,7 +55,7 @@ export default function Header() {
             </div>
 
             {/* nav overlay */}
-            <div className={`${showOverlay ? "absolute" : "hidden"} inset-0 bg-black/50 w-screen h-screen py-8 px-10`}>
+            <div className={`${showOverlay ? "absolute" : "hidden"} inset-0 bg-black/50 w-full h-full py-8 px-10`}>
                 <ul className="flex flex-col items-end gap-5">
                     <li>
                         <button onClick={closeOverlay}>
