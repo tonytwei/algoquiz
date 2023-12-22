@@ -1,154 +1,86 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from 'next/image'
 import { useForm, SubmitHandler } from "react-hook-form";
+import { QFilter, QAnswer, QData, diffColorMap } from '../types/Question';
+import { diffs, diffMap, topics, topicMap, sets, setMap } from '../types/Filter';
 
-interface QFilter {
-  easy: Boolean;
-  medium: Boolean;
-  hard: Boolean;
-  array: Boolean;
-  twoPointers: Boolean;
-  slidingWindow: Boolean;
-  stack: Boolean;
-  binarySearch: Boolean;
-  linkedList: Boolean;
-  trees: Boolean;
-  heap: Boolean;
-  backtracking: Boolean;
-  graphs: Boolean;
-  dynamicProgramming: Boolean;
-  greedy: Boolean;
-  set: String;
-}
 
-interface QAnswer {
-  answer: Number
-}
+export default function QuizWindow(props: {
+  questionNum: String;
+}) {
+  const [data, setData] = useState<QData>();
+  const [isLoading, setLoading] = useState(() => true);
+  const [error, setError] = useState(() => "");
 
-type QExample = {
-  input: string
-  output: string
-}
-
-type QQuestion = {
-  questionText: string
-  answer: number
-  options: [string]
-}
-
-type QData = {
-  id: number
-  title: string
-  difficulty: string
-  topcs: [string]
-  sets: [string]
-  description: string
-  examples: [QExample]
-  constraints: [string]
-  questions: [QQuestion]
-}
-
-const diffs: Array<string> = [
-"easy",
-"medium",
-"hard"
-];
-const diffMap = new Map<String, String>([
-["easy", "Easy"],
-["medium", "Medium"],
-["hard", "Hard"],
-]);
-const topics: Array<string> = [
-"array",
-"twoPointers",
-"slidingWindow",
-"stack",
-"binarySearch",
-"linkedList",
-"trees",
-"heap",
-"backtracking",
-"graphs",
-"dynamicProgramming",
-"greedy"
-];
-const topicMap = new Map<String, String>([
-["array", "Array"],
-["twoPointers", "Two Pointers"],
-["slidingWindow", "Sliding Window"],
-["stack", "Stack"],
-["binarySearch", "Binary Search"],
-["linkedList", "Linked List"],
-["trees", "Trees"],
-["heap", "Heap"],
-["backtracking", "Backtracking"],
-["graphs", "Graphs"],
-["dynamicProgramming", "DP"],
-["greedy", "Greedy"]
-]);
-const sets: Array<string> = [
-"all",
-"custom",
-"saved",
-"completed",
-"gdsc-array"
-];
-const setMap = new Map<String, String>([
-["all", "All"],
-["custom", "Custom"],
-["saved", "Saved"],
-["completed", "Completed"],
-["gdsc-array", "GDSC: Array"],
-]);
-
-const diffColorMap = new Map<string, string>([
-  ["easy", "text-[#89ff8d]"],
-  ["medium", "text-[#ffd23e]"],
-  ["hard", "text-[#F44336]"],
-])
-
-export default function QuizWindow(question: QData) {
-  // console.log(question)
-  const questionPartLen = question.questions.length;
   const [questionPart, setQuestionPart] = useState<number>(0)
   const [questionPartCompleted, setQuestionPartCompleted] = useState<boolean>(false)
   const [questionCompleted, setQuestionCompleted] = useState<boolean>(false)
-  const [filterOverlay, setFilterOverlay] = useState<boolean>(false)
+  const [showFilter, setShowFilter] = useState<boolean>(false)
 
   const {
     register: registerFilter,
     handleSubmit: handleSubmitFilter,
     reset: resetFilter
   } = useForm<QFilter>({
-  defaultValues: {
-    set: "all"
-  }
-  });
-  const onSubmitFilter: SubmitHandler<QFilter> = data => console.log(data);
+    defaultValues: {
+      set: "all"
+  }});
+  const onSubmitFilter: SubmitHandler<QFilter> = filterData => console.log(filterData);
   
   const {
     register: registerAnswer,
     handleSubmit: handleSubmitAnswer,
     reset: resetAnswer
   } = useForm<QAnswer>({
-  defaultValues: {
-    answer: -1
-  }
-  });
-  const onSubmitAnswer: SubmitHandler<QAnswer> = (data) => {
-    if (data.answer != question.questions[questionPart].answer) {
-      console.log("wrong answer" + data.answer); // TODO: remove
+    defaultValues: {
+      answer: -1
+  }});
+  const onSubmitAnswer: SubmitHandler<QAnswer> = (answerData) => {
+    if (answerData.answer != data!.questions[questionPart].answer) {
+      console.log("wrong answer" + answerData.answer); // TODO: remove
       return;
     }
-    console.log("correct answer" + data.answer); // TODO: remove
-    if (questionPart + 1 == questionPartLen) {
+    console.log("correct answer" + answerData.answer); // TODO: remove
+    if (questionPart + 1 == data!.questions.length) {
       setQuestionCompleted(true);
       // setQuestionPartCompleted(true);
     } else {
       setQuestionPartCompleted(true);
     }
   };
+
+  const query = `${process.env.BASE_URL}/question/${props.questionNum}`;
+  console.log(query);
+  useEffect(() => {
+    if (data == undefined) {
+      setLoading(true)
+      fetch(query, {
+        method: 'GET',
+        headers: {
+          accept: 'application/json'
+        },
+        cache: 'no-store'
+      })
+      .then((res) => { res.json })
+      .then((data) => {
+        // BROKEN HERE !!!!!
+        if (data != 200) {
+          setError("Question Not Found")
+        } else {
+          setData(data.response)
+        }
+        setLoading(false)
+      }).catch((error) => {
+        console.log(error);
+        setError(error.toString);
+      });
+    }
+  }, [data, query]);
+  if (isLoading) return <p>Loading...</p>;
+  console.log(process.env.BASE_URL);
+  return <p>Temp</p>;
+  
 
   const nextQuestionPart = () => {
     setQuestionPart(questionPart + 1);
@@ -159,8 +91,8 @@ export default function QuizWindow(question: QData) {
   return (
     <div className="flex flex-row w-full h-max px-10 py-8 md:gap-5">
       {/* quiz filter */}
-      <div className={`${filterOverlay ? "absolute inset-0 bg-black/50 w-full h-full py-8 px-10" : ""}`}>
-        <div className={`${filterOverlay ? "w-full h-full flex flex-col items-center gap-4" : "hidden md:block"}`}>
+      <div className={`${showFilter ? "absolute inset-0 bg-black/50 w-full h-full py-8 px-10" : ""}`}>
+        <div className={`${showFilter ? "w-full h-full flex flex-col items-center gap-4" : "hidden md:block"}`}>
           <form id="filter" onSubmit={handleSubmitFilter(onSubmitFilter)} className={`flex flex-col bg-overlay rounded-md p-5 w-max h-min gap-4 text-white`}>
             <div>
               <h2 className="text-teal-300 text-xl">DIFFICULTY:</h2>
@@ -193,7 +125,7 @@ export default function QuizWindow(question: QData) {
             </div>
           </form>
           <div className="flex flex-col items-center">
-            <button type="button" onClick={() => setFilterOverlay(false)} className={`${filterOverlay ? "": "hidden"} checkbox-unchecked w-min text-black py-1 px-2 text-sm rounded-md`}>CLOSE</button>
+            <button type="button" onClick={() => setShowFilter(false)} className={`${showFilter ? "": "hidden"} checkbox-unchecked w-min text-black py-1 px-2 text-sm rounded-md`}>CLOSE</button>
           </div>
         </div>
       </div>
@@ -267,7 +199,7 @@ export default function QuizWindow(question: QData) {
                   height="24"
                 />
               </button>
-              <button type="button" onClick={() => setFilterOverlay(true)} className="md:hidden checkbox-unchecked rounded-md py-1 px-3">
+              <button type="button" onClick={() => setShowFilter(true)} className="md:hidden checkbox-unchecked rounded-md py-1 px-3">
                 <Image
                   src="/images/quiz/settings.png"
                   alt="Open Settings"

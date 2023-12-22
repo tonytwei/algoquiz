@@ -53,7 +53,7 @@ export async function GET(
   const id = params.id
   console.log("/app/api/question/" + id)
   
-  return NextResponse.json(sampleData, { status: 200})
+  return NextResponse.json(sampleData, { status: 200 })
   // return NextResponse.json({
   //   id: id,
   //   title: "TITLE",
