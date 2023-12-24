@@ -1,0 +1,31 @@
+{
+  "id": "217",
+  "title": "217. Contains Duplicate",
+  "difficulty": "easy",
+  "topics": ["Arrays"],
+  "sets": ["GDSC: Arrays"],
+  "description": "Given an integer array 'nums', return 'true' if any value appears at least twice in the array, return 'false' if every element is distinct",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,1]",
+      "output": "true"
+    },
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "false"
+    }
+  ],
+  "constraints": ["1 <= nums.length <= 10^5", "-10^9 <= nums[i] <= 10^9"],
+  "questions": [
+    {
+      "questionText": "Question 1",
+      "answer": "0",
+      "options": ["0", "1", "2", "3"]
+    },
+    {
+      "questionText": "Question 2",
+      "answer": "0",
+      "options": ["0", "1", "2", "3"]
+    }
+  ]
+}
