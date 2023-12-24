@@ -1,10 +1,30 @@
-import Header from '../../components/Header'
+import Header from "@/components/Header";
+import NavMenu from "@/components/NavMenu";
+import User from "@/models/user";
 
-export default function Home() {
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/api/auth/signin");
+  }
+
+  let user = await User.findOneAndUpdate(
+    { email: session.user?.email },
+    { $setOnInsert: { saved: [], completed: [] } },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
+  );
+
   return (
-    <main className="flex flex-col bg-neutral-700 h-screen">
+    <main className="flex flex-col bg-neutral-700 bg-cover w-full h-screen">
       <Header />
-      <h1>TODO: build account page</h1>
+      <NavMenu
+        session={session}
+        saved={user.saved}
+        completed={user.completed}
+      />
     </main>
-  )
+  );
 }
