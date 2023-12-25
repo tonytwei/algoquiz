@@ -2,13 +2,27 @@
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { QFilter, QAnswer, QData } from "@/types/Question";
+import { diffs, diffMap, sets, setMap } from "@/types/Filter";
 import QuizFilter from "@/components/QuizFilter";
 import QuizHeader from "@/components/QuizHeader";
 import QuizQuestion from "@/components/QuizQuestion";
 import QuizAnswer from "@/components/QuizAnswer";
 import QuizButtons from "@/components/QuizButtons";
+import QuizList from "@/components/QuizList";
 
-export default function QuizWindow(props: { questionNum: String }) {
+interface questionListElement {
+  id: string;
+  title: string;
+  difficulty: string;
+  saved: boolean;
+  completed: boolean;
+}
+
+export default function QuizWindow(props: {
+  questionNum: String;
+  saved: [String];
+  completed: [String];
+}) {
   const [data, setData] = useState<QData>();
   const [isLoading, setLoading] = useState(() => true);
   const [error, setError] = useState(() => "");
@@ -18,6 +32,34 @@ export default function QuizWindow(props: { questionNum: String }) {
     useState<boolean>(false);
   const [questionCompleted, setQuestionCompleted] = useState<boolean>(false);
   const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [questionList, setQuestionList] = useState<[questionListElement]>();
+  const [showList, setShowList] = useState<boolean>(false);
+
+  // setShowList(false); // TODO: remove later
+
+  const getFilterQuery = (filterData: QFilter) => {
+    let difficulties: string[] = [];
+    let sets: string[] = [];
+
+    diffs.forEach((diff) => {
+      if (filterData[diff] === true) {
+        difficulties.push(diff);
+      }
+    });
+
+    // TODO: CONTINUE FROM HERE
+
+    sets.forEach((set) => {
+      if (filterData[set] === true) {
+        filterQuery += `set=${set}&`;
+      }
+    });
+
+    let filterQuery = "?";
+    console.log(filterQuery);
+
+    return filterQuery;
+  };
 
   const {
     register: registerFilter,
@@ -28,8 +70,12 @@ export default function QuizWindow(props: { questionNum: String }) {
       set: "all",
     },
   });
-  const onSubmitFilter: SubmitHandler<QFilter> = (filterData) =>
+  const onSubmitFilter: SubmitHandler<QFilter> = (filterData) => {
     console.log(filterData);
+    let filterQuery = getFilterQuery(filterData);
+    // await fetch();
+    setShowList(true);
+  };
 
   const {
     register: registerAnswer,
@@ -48,16 +94,9 @@ export default function QuizWindow(props: { questionNum: String }) {
     console.log("correct answer" + answerData.answer); // TODO: remove
     if (questionPart + 1 == data!.questions.length) {
       setQuestionCompleted(true);
-      // setQuestionPartCompleted(true);
     } else {
       setQuestionPartCompleted(true);
     }
-  };
-
-  const nextQuestionPart = () => {
-    setQuestionPart(questionPart + 1);
-    resetAnswer();
-    setQuestionPartCompleted(false);
   };
 
   const query = `${process.env.NEXT_PUBLIC_BASE_URL}/question/${props.questionNum}`;
@@ -82,7 +121,13 @@ export default function QuizWindow(props: { questionNum: String }) {
           setLoading(false);
         });
     }
-  }, [data, query]);
+  }, [query]);
+
+  const nextQuestionPart = () => {
+    setQuestionPart(questionPart + 1);
+    resetAnswer();
+    setQuestionPartCompleted(false);
+  };
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -91,6 +136,9 @@ export default function QuizWindow(props: { questionNum: String }) {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-row w-full max-w-[1000px] justify-center px-5 py-8 h-max md:gap-5">
+        {showList && (
+          <QuizList saved={props.saved} completed={props.completed} />
+        )}
         <QuizFilter
           showFilter={showFilter}
           registerFilter={registerFilter}

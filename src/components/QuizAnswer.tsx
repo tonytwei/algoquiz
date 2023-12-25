@@ -11,13 +11,6 @@ export default function QuizAnswer(props: {
   nextQuestionPart: any;
   questionPartCompleted: any;
 }) {
-  const diffColorMap: { [key: string]: string } = {
-    easy: "text-[#89ff8d]",
-    medium: "text-[#ffd23e]",
-    hard: "text-red-800",
-  };
-  const diffColor: string = diffColorMap[props.data.difficulty];
-
   return (
     <div className="flex flex-col gap-3">
       <h2>{props.data.questions[props.questionPart].questionText}</h2>

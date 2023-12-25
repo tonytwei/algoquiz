@@ -1,4 +1,5 @@
-export interface QFilter {
+export type QFilter = {
+  [key: string]: any;
   easy: Boolean;
   medium: Boolean;
   hard: Boolean;
@@ -15,11 +16,11 @@ export interface QFilter {
   dynamicProgramming: Boolean;
   greedy: Boolean;
   set: String;
-}
+};
 
-export interface QAnswer {
+export type QAnswer = {
   answer: Number;
-}
+};
 
 type QExample = {
   input: string;
