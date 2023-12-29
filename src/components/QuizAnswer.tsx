@@ -10,6 +10,7 @@ export default function QuizAnswer(props: {
   questionCompleted: any;
   nextQuestionPart: any;
   questionPartCompleted: any;
+  setShowFilter: any;
 }) {
   return (
     <div className="flex flex-col gap-3">
@@ -59,7 +60,7 @@ export default function QuizAnswer(props: {
         </button>
         <button
           type="submit"
-          onClick={() => console.log("next question")}
+          form="filter"
           className={`${
             props.questionCompleted ? "" : "hidden"
           } w-40 checkbox-unchecked text-black py-1 px-5 text-sm rounded-md`}

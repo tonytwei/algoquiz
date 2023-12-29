@@ -1,10 +1,12 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  mode: "jit",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/types/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -18,6 +20,8 @@ const config: Config = {
         overlay: "#5f5f5f",
         "accent-lime": "#55d6be",
         "accent-dark-lime": "#40a190",
+        "accent-yellow": "#d6c455",
+        "accent-dark-yellow": "#a19040",
       },
     },
   },

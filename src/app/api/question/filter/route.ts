@@ -4,16 +4,10 @@ import Question from "@/models/question";
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams;
-  if (!params.has("sets")) {
-    return NextResponse.json(
-      { error: "Filter paramater incomplete" },
-      { status: 400 }
-    );
-  }
 
   const filter: { [key: string]: any } = {};
   Object.entries(Object.fromEntries(params)).forEach(([key, value]) => {
-    if (typeof value === "string") filter[key] = value.split(",");
+    if (typeof value === "string") filter[key] = { $in: value.split(",") };
   });
 
   await connectMongo();
@@ -27,11 +21,13 @@ export async function GET(request: NextRequest) {
       res = res.sort(
         (a, b) => order.indexOf(a.difficulty) - order.indexOf(b.difficulty)
       );
+      console.log("Filter found");
       return res;
     })
     .catch((error) => {
       console.error(error);
       status = 401;
+      console.log("Filter not found");
     });
 
   return NextResponse.json({ response: res }, { status: status });
