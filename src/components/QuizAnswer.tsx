@@ -2,49 +2,47 @@
 import { QData } from "@/types/Question";
 
 export default function QuizAnswer(props: {
-  data: QData;
-  questionPart: number;
+  qData: QData;
+  qPart: number;
   onSubmitAnswer: any;
   handleSubmitAnswer: any;
   registerAnswer: any;
-  questionCompleted: any;
+  qCompleted: any;
   nextQuestionPart: any;
-  questionPartCompleted: any;
+  qPartCompleted: any;
   setShowFilter: any;
 }) {
   return (
     <div className="flex flex-col gap-3">
-      <h2>{props.data.questions[props.questionPart].questionText}</h2>
+      <h2>{props.qData.questions[props.qPart].questionText}</h2>
       <form
         id="answer"
         onSubmit={props.handleSubmitAnswer(props.onSubmitAnswer)}
         className="flex flex-col"
       >
-        {props.data.questions[props.questionPart].options.map(
-          (option, index) => (
-            <label
-              key={index}
-              htmlFor={option}
-              className="flex flex-row gap-2 items-center"
-            >
-              <input
-                id={option}
-                type="radio"
-                value={index}
-                {...props.registerAnswer("answer")}
-                className="checkbox-round checkbox-unchecked checkbox-checked-green"
-              />
-              <label htmlFor={option}>{option}</label>
-            </label>
-          )
-        )}
+        {props.qData.questions[props.qPart].options.map((option, index) => (
+          <label
+            key={index}
+            htmlFor={option}
+            className="flex flex-row gap-2 items-center"
+          >
+            <input
+              id={option}
+              type="radio"
+              value={index}
+              {...props.registerAnswer("answer")}
+              className="checkbox-round checkbox-unchecked checkbox-checked-green"
+            />
+            <label htmlFor={option}>{option}</label>
+          </label>
+        ))}
       </form>
       <div className="flex flex-row gap-3">
         <button
           type="submit"
           form="answer"
           className={`${
-            props.questionCompleted ? "hidden" : ""
+            props.qCompleted ? "hidden" : ""
           } w-20 checkbox-unchecked text-black py-1 text-sm rounded-md`}
         >
           Submit
@@ -53,7 +51,7 @@ export default function QuizAnswer(props: {
           type="button"
           onClick={() => props.nextQuestionPart()}
           className={`${
-            props.questionPartCompleted ? "" : "hidden"
+            props.qPartCompleted ? "" : "hidden"
           } w-20 checkbox-unchecked text-black py-1 px-5 text-sm rounded-md`}
         >
           Next
@@ -62,7 +60,7 @@ export default function QuizAnswer(props: {
           type="submit"
           form="filter"
           className={`${
-            props.questionCompleted ? "" : "hidden"
+            props.qCompleted ? "" : "hidden"
           } w-40 checkbox-unchecked text-black py-1 px-5 text-sm rounded-md`}
         >
           Next Question

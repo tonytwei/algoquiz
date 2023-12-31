@@ -37,10 +37,18 @@ export type QData = {
   id: number;
   title: string;
   difficulty: string;
-  topcs: [string];
-  sets: [string];
+  topics: string[];
+  sets: string[];
   description: string;
-  examples: [QExample];
-  constraints: [string];
-  questions: [QQuestion];
+  examples: QExample[];
+  constraints: string[];
+  questions: QQuestion[];
 };
+
+export interface QListElem {
+  id: string;
+  title: string;
+  difficulty: string;
+  saved: boolean;
+  completed: boolean;
+}

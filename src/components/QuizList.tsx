@@ -1,17 +1,10 @@
 "use client";
 import { diffMap, diffColorMap } from "@/types/Filter";
 import { useRouter } from "next/navigation";
-
-interface questionListElement {
-  id: string;
-  title: string;
-  difficulty: string;
-  saved: boolean;
-  completed: boolean;
-}
+import { QListElem } from "@/types/Question";
 
 export default function QuizList(props: {
-  questionList: questionListElement[];
+  qList: QListElem[];
   setShowList: any;
 }) {
   const router = useRouter();
@@ -28,7 +21,7 @@ export default function QuizList(props: {
           </tr>
         </thead>
         <tbody>
-          {props.questionList.map((question) => {
+          {props.qList.map((question) => {
             let diffColor: string = diffColorMap.get(question.difficulty)!;
             return (
               <tr
@@ -36,21 +29,25 @@ export default function QuizList(props: {
                 onClick={() => router.push(`/quiz/${question.id}`)}
                 className="h-10 cursor-pointer hover:bg-gray-300 hover:bg-opacity-20 border-t-2 border-gray-400"
               >
-                <td className="text-center">
-                  <input
-                    type="checkbox"
-                    disabled={true}
-                    checked={question.saved}
-                    className="checkbox-square checkbox-unchecked checkbox-checked-yellow"
-                  />
+                <td>
+                  <div className="h-full w-full flex items-center justify-center">
+                    <input
+                      type="checkbox"
+                      disabled={true}
+                      checked={question.saved}
+                      className="checkbox-square checkbox-unchecked checkbox-checked-yellow"
+                    />
+                  </div>
                 </td>
-                <td className="text-center">
-                  <input
-                    type="checkbox"
-                    disabled={true}
-                    checked={question.completed}
-                    className="checkbox-square checkbox-unchecked checkbox-checked-green"
-                  />
+                <td>
+                  <div className="h-full w-full flex items-center justify-center">
+                    <input
+                      type="checkbox"
+                      disabled={true}
+                      checked={question.completed}
+                      className="checkbox-square checkbox-unchecked checkbox-checked-green"
+                    />
+                  </div>
                 </td>
                 <td className="text-left">{question.title}</td>
                 <td className={`${diffColor} text-center`}>
