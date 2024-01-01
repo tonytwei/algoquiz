@@ -18,6 +18,9 @@
   .checkbox-checked-yellow {
     @apply checked:bg-accent-yellow checked:border-accent-dark-yellow;
   }
+  .custom-gradient {
+    @apply bg-gradient-to-br from-[#222222] via-[#2e343b] via-60% to-[#2f1f4e];
+  }
 }
 
 :root {

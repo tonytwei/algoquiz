@@ -77,7 +77,7 @@ export default function QuizFilter(props: {
             <h2 className="text-teal-300 text-xl">SET:</h2>
             <select
               {...props.registerFilter("set")}
-              className="text-black w-full"
+              className="text-black w-full rounded-sm"
             >
               {sets.map((set, index) => (
                 <option key={index} value={set}>

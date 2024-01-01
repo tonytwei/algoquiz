@@ -3,17 +3,21 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Header() {
+export default function Header(params: { showBackground: boolean }) {
   const [showOverlay, setShowOverlay] = useState(false);
 
   return (
-    <header className="h-max w-full flex flex-col items-center bg-neutral-800">
+    <header
+      className={`h-max w-full flex flex-col items-center ${
+        params.showBackground ? "bg-neutral-800" : ""
+      }`}
+    >
       <div className="flex flex-row align-middle justify-between h-full w-full py-5 px-5 max-w-[1000px]">
         {/* logo icon, logo text */}
         <Link href="/">
           <div className="flex flex-row marker items-center gap-3">
             <Image
-              src="/images/header/logo.png"
+              src="/images/logo.png"
               alt="Algoquiz Logo"
               width="48"
               height="48"
@@ -25,11 +29,11 @@ export default function Header() {
         <div className="flex flex-row items-center">
           {/* nav bar */}
           <ul className="flex-row items-center gap-5 hidden md:flex">
-            <li>
+            {/* <li>
               <Link href="/">
                 <h1 className="text-xl text-stone-300 font-medium">HOME</h1>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link href="/quiz">
                 <h1 className="text-xl text-stone-300 font-medium">PRACTICE</h1>

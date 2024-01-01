@@ -19,7 +19,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col bg-neutral-700 bg-cover w-full h-screen">
-      <Header />
+      <Header showBackground={true} />
       <NavMenu
         session={session}
         saved={user.saved}

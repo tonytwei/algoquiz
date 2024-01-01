@@ -11,7 +11,7 @@ export default async function ProtectedRoute() {
 
   return (
     <main className="flex flex-col bg-neutral-700 bg-cover w-full h-screen">
-      <Header />
+      <Header showBackground={true} />
       <h1>TODO: build admin page</h1>
     </main>
   );

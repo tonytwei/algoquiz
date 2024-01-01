@@ -50,7 +50,7 @@ export default async function Home({ params }: { params: { id: string[] } }) {
 
   return (
     <main className="flex flex-col bg-neutral-700 bg-cover w-full h-screen">
-      <Header />
+      <Header showBackground={true} />
       <QuizWindow saved={saved} completed={completed} qData={qData} />
     </main>
   );
