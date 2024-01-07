@@ -6,18 +6,20 @@ import { QListElem } from "@/types/Question";
 export default function QuizList(props: {
   qList: QListElem[];
   setShowList: any;
+  updateUserSaved: any;
+  updateUserCompleted: any;
 }) {
   const router = useRouter();
 
   return (
-    <div className="absolute inset-0 bg-black/50 flex flex-col w-vw h-vh items-center py-8 gap-4">
+    <div className="absolute inset-0 bg-black/50 text-white flex flex-col w-vw h-vh items-center py-8 gap-4">
       <table className="bg-overlay font-normal rounded-md">
         <thead>
-          <tr className="font-normal">
-            <th className="py-2 px-4">Saved</th>
-            <th className="py-2 px-4">Completed</th>
-            <th className="py-2 px-4">Problem</th>
-            <th className="py-2 px-4">Difficulty</th>
+          <tr>
+            <th className="py-2 px-4 font-normal">Saved</th>
+            <th className="py-2 px-4 font-normal">Completed</th>
+            <th className="py-2 px-4 font-normal">Problem</th>
+            <th className="py-2 px-4 font-normal">Difficulty</th>
           </tr>
         </thead>
         <tbody>
@@ -33,8 +35,13 @@ export default function QuizList(props: {
                   <div className="h-full w-full flex items-center justify-center">
                     <input
                       type="checkbox"
-                      disabled={true}
                       checked={question.saved}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                      onChange={(e) => {
+                        props.updateUserSaved(e.target.checked, question.id);
+                      }}
                       className="checkbox-square checkbox-unchecked checkbox-checked-yellow"
                     />
                   </div>
@@ -43,8 +50,17 @@ export default function QuizList(props: {
                   <div className="h-full w-full flex items-center justify-center">
                     <input
                       type="checkbox"
-                      disabled={true}
                       checked={question.completed}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                      onChange={(e) => {
+                        props.updateUserCompleted(
+                          e.target.checked,
+                          question.id,
+                          false
+                        );
+                      }}
                       className="checkbox-square checkbox-unchecked checkbox-checked-green"
                     />
                   </div>

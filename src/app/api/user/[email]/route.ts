@@ -19,7 +19,7 @@ export async function GET(
   //   return NextResponse.json({ error: "No session found" }, { status: 403 });
   // }
 
-  console.log("/app/api/email/" + params.email);
+  console.log("/app/api/user/" + params.email);
 
   await connectMongo();
 
@@ -49,36 +49,46 @@ export async function PUT(
   //   console.log("User not authorized");
   //   return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/account`);
   // }
-  const searchParams = request.nextUrl.searchParams;
-  console.log(searchParams);
 
-  console.log("savedAdd:", searchParams.get("savedAdd"));
-  console.log("completedAdd:", searchParams.get("completedAdd"));
-  console.log("savedRemove:", searchParams.get("savedRemove"));
-  console.log("completedRemove:", searchParams.get("completedRemove"));
-
-  console.log("/app/api/email/" + params.email);
+  console.log("/app/api/user/" + params.email);
 
   await connectMongo();
 
-  // update params not working
-  const updateParams = {
-    $addToSet: {
-      saved: searchParams.get("savedAdd"),
-      completed: searchParams.get("completedAdd"),
-    },
-    $pull: {
-      saved: searchParams.get("savedRemove"),
-      completed: searchParams.get("completedRemove"),
-    },
+  const searchParams = request.nextUrl.searchParams;
+  const savedAdd = searchParams.get("savedAdd");
+  const completedAdd = searchParams.get("completedAdd");
+  const savedRemove = searchParams.get("savedRemove");
+  const completedRemove = searchParams.get("completedRemove");
+
+  let addParams: { $addToSet: { saved?: string; completed?: string } } = {
+    $addToSet: {},
   };
+  if (savedAdd !== null) {
+    addParams.$addToSet.saved = savedAdd;
+  }
+  if (completedAdd !== null) {
+    addParams.$addToSet.completed = completedAdd;
+  }
 
-  console.log(updateParams);
-  let user = await User.findOneAndUpdate(
-    { email: params.email },
-    updateParams,
-    { new: true }
-  );
+  let removeParams: { $pull: { saved?: string; completed?: string } } = {
+    $pull: {},
+  };
+  if (savedRemove !== null) {
+    removeParams.$pull.saved = savedRemove;
+  }
+  if (completedRemove !== null) {
+    removeParams.$pull.completed = completedRemove;
+  }
 
-  return NextResponse.json({ response: user }, { status: 200 });
+  let user;
+  try {
+    await User.findOneAndUpdate({ email: params.email }, addParams);
+    user = await User.findOneAndUpdate({ email: params.email }, removeParams, {
+      new: true,
+    });
+    return NextResponse.json({ response: user }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ error: error }, { status: 500 });
+  }
 }

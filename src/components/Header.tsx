@@ -91,7 +91,7 @@ export default function Header(params: { showBackground: boolean }) {
             </li>
             <li>
               <Link href="/account">
-                <h1 className="text-xl text-teal-300 font-medium outline rounded-sm outline-offset-4 outline-2 outline-teal-300">
+                <h1 className="text-xl text-teal-300 py-1 font-medium outline rounded-sm outline-offset-4 outline-2 outline-teal-300">
                   ACCOUNT
                 </h1>
               </Link>

@@ -59,21 +59,26 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-full h-max text-center bg-white">
-        <h1 className="text-teal-300">Land your dream job</h1>
-        <h3 className="text-[#8698b1]">
-          Our goal is to prepare you for any technical interview question so you
-          can succeed
-        </h3>
-        <div className="flex flex-row flex-wrap py-5 justify-center items-center gap-5">
-          {companies.map((company) => (
-            <img
-              src={`/images/index/companies/${company}.png`}
-              alt={`${company} logo`}
-              width={100}
-              height="auto"
-            />
-          ))}
+      <div className="flex flex-row justify-center w-full h-max bg-white">
+        <div className="flex flex-col max-w-[1000px] text-center">
+          <h1 className="text-teal-300">Land your dream job</h1>
+          <h3 className="text-[#8698b1]">
+            Our goal is to prepare you for any technical interview question so
+            you can succeed
+          </h3>
+          <div className="flex flex-row flex-wrap py-5 justify-center items-center gap-5">
+            {companies.map((company) => (
+              <Image
+                key={company}
+                src={`/images/index/companies/${company}.png`}
+                alt={`${company} logo`}
+                width="0"
+                height="0"
+                sizes="100vw"
+                className="w-[100px] h-auto"
+              />
+            ))}
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-center py-5 bg-[#2e343b] w-full">

@@ -10,19 +10,29 @@ import QuizAnswer from "@/components/QuizAnswer";
 import QuizButtons from "@/components/QuizButtons";
 import QuizList from "@/components/QuizList";
 
-export default function QuizWindow(props: {
-  saved: string[];
-  completed: string[];
+import { SessionProvider, useSession } from "next-auth/react";
+
+function QuizWindowSession(props: {
+  savedList: string[];
+  completedList: string[];
+  qSaved: boolean;
   qData: QData;
 }) {
+  const { data: session } = useSession();
+
   const [qData, setQData] = useState<QData>(props.qData);
   const [error, setError] = useState(() => "");
 
   const [qPart, setQPart] = useState<number>(0);
   const [qPartCompleted, setQPartCompleted] = useState<boolean>(false);
 
-  const [qSaved, setQSaved] = useState<boolean>(false);
+  const [qSaved, setQSaved] = useState<boolean>(props.qSaved);
   const [qCompleted, setQCompleted] = useState<boolean>(false);
+
+  const [savedList, setSavedList] = useState<string[]>(props.savedList);
+  const [completedList, setCompletedList] = useState<string[]>(
+    props.completedList
+  );
 
   const [filterQuery, setFilterQuery] = useState<string>("?");
   const [showFilter, setShowFilter] = useState<boolean>(false);
@@ -30,6 +40,7 @@ export default function QuizWindow(props: {
   const [qList, setQList] = useState<QListElem[]>([]);
   const [showList, setShowList] = useState<boolean>(false);
 
+  // filter form
   const {
     register: registerFilter,
     handleSubmit: handleSubmitFilter,
@@ -45,6 +56,7 @@ export default function QuizWindow(props: {
     setShowList(true);
   };
 
+  // answer form
   const {
     register: registerAnswer,
     handleSubmit: handleSubmitAnswer,
@@ -62,6 +74,8 @@ export default function QuizWindow(props: {
     console.log("correct answer" + answerData.answer); // TODO: remove
     if (qPart + 1 == qData!.questions.length) {
       setQCompleted(true);
+      // TODO: continue from here, update user completed
+      updateUserCompleted(true, qData.id.toString());
     } else {
       setQPartCompleted(true);
     }
@@ -81,8 +95,8 @@ export default function QuizWindow(props: {
         let res: QListElem[] = [];
         data.response.map(
           (question: { id: string; title: string; difficulty: string }) => {
-            let isSaved = props.saved.includes(question.id);
-            let isCompleted = props.completed.includes(question.id);
+            let isSaved = savedList.includes(question.id);
+            let isCompleted = completedList.includes(question.id);
             res.push({
               id: question.id,
               title: question.title,
@@ -98,7 +112,84 @@ export default function QuizWindow(props: {
         console.log(error);
         setError(error.toString());
       });
-  }, [filterQuery]);
+  }, [filterQuery, savedList, completedList]);
+
+  const updateUserSaved = (
+    saved: boolean,
+    qNum: string = qData.id.toString()
+  ) => {
+    if (qNum === qData.id.toString()) {
+      setQSaved(saved);
+    }
+    if (saved) {
+      setSavedList([...savedList, qNum]);
+    } else {
+      setSavedList(savedList.filter((id) => id != qNum));
+    }
+
+    if (session) {
+      let query: string = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${session.user?.email}`;
+      if (saved) {
+        query += `?savedAdd=${qNum}`;
+      } else {
+        query += `?savedRemove=${qNum}`;
+      }
+      fetch(query, {
+        method: "PUT",
+        headers: {
+          accept: "application/json",
+        },
+        cache: "no-store",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error.toString());
+        });
+    }
+  };
+
+  const updateUserCompleted = (
+    completed: boolean,
+    qNum: string = qData.id.toString(),
+    updateState: boolean = true
+  ) => {
+    if (updateState && qNum === qData.id.toString()) {
+      setQCompleted(completed);
+    }
+    if (completed) {
+      setCompletedList([...completedList, qNum]);
+    } else {
+      setCompletedList(completedList.filter((id) => id != qNum));
+    }
+
+    if (session) {
+      let query: string = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${session.user?.email}`;
+      if (completed) {
+        query += `?completedAdd=${qNum}`;
+      } else {
+        query += `?completedRemove=${qNum}`;
+      }
+      fetch(query, {
+        method: "PUT",
+        headers: {
+          accept: "application/json",
+        },
+        cache: "no-store",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error.toString());
+        });
+    }
+  };
 
   const getFilterQuery = (filterData: QFilter) => {
     let f_diffs: string[] = [];
@@ -139,7 +230,14 @@ export default function QuizWindow(props: {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-row w-full max-w-[1000px] justify-center px-5 py-8 h-max md:gap-5">
-        {showList && <QuizList qList={qList} setShowList={setShowList} />}
+        {showList && (
+          <QuizList
+            qList={qList}
+            setShowList={setShowList}
+            updateUserSaved={updateUserSaved}
+            updateUserCompleted={updateUserCompleted}
+          />
+        )}
         <QuizFilter
           showFilter={showFilter}
           registerFilter={registerFilter}
@@ -168,11 +266,36 @@ export default function QuizWindow(props: {
                 qPartCompleted={qPartCompleted}
                 setShowFilter={setShowFilter}
               />
-              <QuizButtons setShowFilter={setShowFilter} />
+              <QuizButtons
+                setShowFilter={setShowFilter}
+                qSaved={qSaved}
+                setQSaved={setQSaved}
+                updateUserSaved={updateUserSaved}
+              />
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export default function QuizWindow(props: {
+  savedList: string[];
+  completedList: string[];
+  qSaved: boolean;
+  qData: QData;
+}) {
+  return (
+    <div>
+      <SessionProvider>
+        <QuizWindowSession
+          savedList={props.savedList}
+          completedList={props.completedList}
+          qSaved={props.qSaved}
+          qData={props.qData}
+        />
+      </SessionProvider>
     </div>
   );
 }
