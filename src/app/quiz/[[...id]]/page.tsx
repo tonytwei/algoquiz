@@ -6,8 +6,10 @@ import { getServerSession } from "next-auth";
 
 export default async function Home({ params }: { params: { id: string[] } }) {
   // question data
-  const questionNum: string = params.id ? params.id[0] : "217"; // default question number
-  const questionQuery: string = `${process.env.NEXT_PUBLIC_BASE_URL}/api/question/${questionNum}`;
+  const questionNum: string[] = params.id ? params.id : ["217"]; // default question number
+  const questionQuery: string = `${
+    process.env.NEXT_PUBLIC_BASE_URL
+  }/api/question?${questionNum.map((id) => `id=${id}`).join("&")}`;
   let qData = {} as QData;
   let qSaved: boolean = false;
   await fetch(questionQuery, {
@@ -19,7 +21,7 @@ export default async function Home({ params }: { params: { id: string[] } }) {
   })
     .then((res) => res.json())
     .then((data) => {
-      qData = data.response;
+      qData = data.response[0];
     })
     .catch((error) => {
       console.log(error);
@@ -48,7 +50,7 @@ export default async function Home({ params }: { params: { id: string[] } }) {
         console.log(error);
       });
 
-    qSaved = savedList.includes(questionNum);
+    qSaved = savedList.includes(questionNum[0]);
   }
 
   return (

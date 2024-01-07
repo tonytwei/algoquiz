@@ -233,6 +233,7 @@ function QuizWindowSession(props: {
         {showList && (
           <QuizList
             qList={qList}
+            useOverlay={true}
             setShowList={setShowList}
             updateUserSaved={updateUserSaved}
             updateUserCompleted={updateUserCompleted}

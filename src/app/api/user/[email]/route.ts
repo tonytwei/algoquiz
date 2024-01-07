@@ -19,17 +19,18 @@ export async function GET(
   //   return NextResponse.json({ error: "No session found" }, { status: 403 });
   // }
 
-  console.log("/app/api/user/" + params.email);
-
   await connectMongo();
 
   let user = await User.findOne({ email: params.email });
   let status = 401;
   if (!user) {
-    console.log("User not found");
-    status = 400;
+    console.log("User not found, creating new user");
+    user = new User({ email: params.email });
+    await user.save();
+    status = 201; // 201 Created status code
   } else {
     console.log("User found");
+    status = 200; // 200 OK status code
   }
 
   return NextResponse.json({ response: user }, { status: status });

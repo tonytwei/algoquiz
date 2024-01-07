@@ -5,6 +5,7 @@ import { QListElem } from "@/types/Question";
 
 export default function QuizList(props: {
   qList: QListElem[];
+  useOverlay: boolean;
   setShowList: any;
   updateUserSaved: any;
   updateUserCompleted: any;
@@ -12,7 +13,10 @@ export default function QuizList(props: {
   const router = useRouter();
 
   return (
-    <div className="absolute inset-0 bg-black/50 text-white flex flex-col w-vw h-vh items-center py-8 gap-4">
+    <div
+      className={`text-white flex flex-col w-vw h-vh items-center py-8 gap-4
+      ${props.useOverlay ? "absolute inset-0 bg-black/50" : ""}`}
+    >
       <table className="bg-overlay font-normal rounded-md">
         <thead>
           <tr>
@@ -74,7 +78,11 @@ export default function QuizList(props: {
           })}
         </tbody>
       </table>
-      <div className="flex flex-col items-center">
+      <div
+        className={`flex-col items-center ${
+          props.useOverlay ? "flex" : "hidden"
+        }`}
+      >
         <button
           type="button"
           onClick={() => props.setShowList(false)}

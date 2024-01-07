@@ -1,30 +1,39 @@
+"use server";
 import Header from "@/components/Header";
-import NavMenu from "@/components/NavMenu";
-import User from "@/models/user";
+import AccountWindow from "@/components/AccountWindow";
 
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 
 export default async function Home() {
-  // const session = await getServerSession();
-  // if (!session?.user?.email) {
-  //   redirect("/api/auth/signin");
-  // }
+  const session = await getServerSession();
 
-  // let user = await User.findOneAndUpdate(
-  //   { email: session.user.email },
-  //   { $setOnInsert: { saved: [], completed: [] } },
-  //   { upsert: true, new: true, setDefaultsOnInsert: true }
-  // );
+  let savedList: string[] = [];
+  let completedList: string[] = [];
+  let user: any;
+  if (session?.user?.email) {
+    console.log(session.user.email);
+    const userQuery: string = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${session.user.email}`;
+    user = await fetch(userQuery, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+      cache: "no-store",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        savedList = data.response.saved;
+        completedList = data.response.completed;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
-    <main className="flex flex-col bg-neutral-700 bg-cover w-full h-screen">
+    <main className="flex flex-col items-center bg-neutral-700 bg-cover w-full h-screen">
       <Header showBackground={true} />
-      <NavMenu
-      // session={session}
-      // saved={user.saved}
-      // completed={user.completed}
-      />
+      <AccountWindow savedList={savedList} completedList={completedList} />
     </main>
   );
 }
