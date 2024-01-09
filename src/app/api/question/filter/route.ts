@@ -21,13 +21,11 @@ export async function GET(request: NextRequest) {
       res = res.sort(
         (a, b) => order.indexOf(a.difficulty) - order.indexOf(b.difficulty)
       );
-      console.log("Filter found");
       return res;
     })
     .catch((error) => {
       console.error(error);
       status = 401;
-      console.log("Filter not found");
     });
 
   return NextResponse.json({ response: res }, { status: status });

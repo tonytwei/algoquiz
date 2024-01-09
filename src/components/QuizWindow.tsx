@@ -68,13 +68,10 @@ function QuizWindowSession(props: {
   });
   const onSubmitAnswer: SubmitHandler<QAnswer> = (answerData) => {
     if (answerData.answer != qData!.questions[qPart].answer) {
-      console.log("wrong answer" + answerData.answer); // TODO: remove
       return;
     }
-    console.log("correct answer" + answerData.answer); // TODO: remove
     if (qPart + 1 == qData!.questions.length) {
       setQCompleted(true);
-      // TODO: continue from here, update user completed
       updateUserCompleted(true, qData.id.toString());
     } else {
       setQPartCompleted(true);
@@ -121,12 +118,6 @@ function QuizWindowSession(props: {
     if (qNum === qData.id.toString()) {
       setQSaved(saved);
     }
-    if (saved) {
-      setSavedList([...savedList, qNum]);
-    } else {
-      setSavedList(savedList.filter((id) => id != qNum));
-    }
-
     if (session) {
       let query: string = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${session.user?.email}`;
       if (saved) {
@@ -143,12 +134,20 @@ function QuizWindowSession(props: {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          if (saved) {
+            setSavedList([...savedList, qNum]);
+          } else {
+            setSavedList(savedList.filter((id) => id != qNum));
+          }
         })
         .catch((error) => {
           console.log(error);
           setError(error.toString());
         });
+    } else if (saved) {
+      setSavedList([...savedList, qNum]);
+    } else {
+      setSavedList(savedList.filter((id) => id != qNum));
     }
   };
 
@@ -160,12 +159,6 @@ function QuizWindowSession(props: {
     if (updateState && qNum === qData.id.toString()) {
       setQCompleted(completed);
     }
-    if (completed) {
-      setCompletedList([...completedList, qNum]);
-    } else {
-      setCompletedList(completedList.filter((id) => id != qNum));
-    }
-
     if (session) {
       let query: string = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${session.user?.email}`;
       if (completed) {
@@ -182,12 +175,20 @@ function QuizWindowSession(props: {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          if (completed) {
+            setCompletedList([...completedList, qNum]);
+          } else {
+            setCompletedList(completedList.filter((id) => id != qNum));
+          }
         })
         .catch((error) => {
           console.log(error);
           setError(error.toString());
         });
+    } else if (completed) {
+      setCompletedList([...completedList, qNum]);
+    } else {
+      setCompletedList(completedList.filter((id) => id != qNum));
     }
   };
 
@@ -208,11 +209,7 @@ function QuizWindowSession(props: {
     let res = "?";
     if (f_diffs.length > 0) res += `difficulty=${f_diffs.join(",")}&`;
     if (f_topics.length > 0) res += `topics=${f_topics.join(",")}&`;
-    if (
-      !["all", "custom", "saved", "completed"].includes(
-        filterData.set.toString()
-      )
-    ) {
+    if (!["all", "saved", "completed"].includes(filterData.set.toString())) {
       res += `sets=${filterData.set}&`;
     }
 

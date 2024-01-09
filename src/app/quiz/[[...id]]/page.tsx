@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import QuizWindow from "@/components/QuizWindow";
 import { QData } from "@/types/Question";
 import { getServerSession } from "next-auth";
+import { useEffect } from "react";
 
 export default async function Home({ params }: { params: { id: string[] } }) {
   // question data

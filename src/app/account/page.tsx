@@ -9,11 +9,9 @@ export default async function Home() {
 
   let savedList: string[] = [];
   let completedList: string[] = [];
-  let user: any;
   if (session?.user?.email) {
-    console.log(session.user.email);
     const userQuery: string = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${session.user.email}`;
-    user = await fetch(userQuery, {
+    await fetch(userQuery, {
       method: "GET",
       headers: {
         accept: "application/json",

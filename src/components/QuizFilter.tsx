@@ -17,8 +17,6 @@ export default function QuizFilter(props: {
   resetFilter: any;
   setShowFilter: any;
 }) {
-  const [showOverlay, setShowOverlay] = useState(false);
-
   return (
     <div
       className={`${
