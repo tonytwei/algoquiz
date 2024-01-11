@@ -20,7 +20,7 @@ export default function QuizFilter(props: {
   return (
     <div
       className={`${
-        props.showFilter ? "absolute inset-0 bg-black/50 py-8 px-10" : ""
+        props.showFilter ? "fixed inset-0 bg-black/50 pt-[5vh] px-10" : ""
       }`}
     >
       <div

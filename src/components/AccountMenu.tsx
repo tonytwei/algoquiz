@@ -13,7 +13,7 @@ export default function NavMenu(props: {
     <div className="flex flex-row justify-center text-black gap-5 w-full max-w-[1000px]">
       <label
         htmlFor="saved"
-        className={`flex flex-row justify-center w-[150px] gap-2 py-3 px-6 rounded-md border-4 border-solid cursor-pointer ${
+        className={`flex flex-row items-center justify-center h-14 w-14 sm:w-[150px] gap-2 rounded-md border-4 border-solid cursor-pointer ${
           props.showSaved
             ? "bg-accent-yellow border-accent-dark-yellow"
             : "bg-white border-gray-400"
@@ -25,7 +25,7 @@ export default function NavMenu(props: {
           width="24"
           height="24"
         />
-        <h1>Saved</h1>
+        <h1 className="hidden sm:block">Saved</h1>
         <input
           type="checkbox"
           id="saved"
@@ -35,7 +35,7 @@ export default function NavMenu(props: {
       </label>
       <label
         htmlFor="completed"
-        className={`flex flex-row justify-center w-[150px] gap-2 py-3 px-6 rounded-md border-4 border-solid cursor-pointer ${
+        className={`flex flex-row items-center justify-center h-14 w-14 sm:w-[150px] gap-2 rounded-md border-4 border-solid cursor-pointer ${
           props.showCompleted
             ? "bg-accent-lime border-accent-dark-lime"
             : "bg-white border-gray-400"
@@ -47,7 +47,7 @@ export default function NavMenu(props: {
           width="24"
           height="24"
         />
-        <h1>Completed</h1>
+        <h1 className="hidden sm:block">Completed</h1>
         <input
           type="checkbox"
           id="completed"
@@ -57,7 +57,7 @@ export default function NavMenu(props: {
       </label>
       {props.inSession ? (
         <label
-          className="flex flex-row justify-center w-[150px] gap-2 py-3 px-6 rounded-md border-4 border-solid bg-white border-gray-400 cursor-pointer"
+          className="flex flex-row items-center justify-center h-14 w-14 sm:w-[150px] gap-2 rounded-md border-4 border-solid bg-white border-gray-400 cursor-pointer"
           onClick={() => signOut()}
         >
           <Image
@@ -66,12 +66,12 @@ export default function NavMenu(props: {
             width="24"
             height="24"
           />
-          <h1>Sign Out</h1>
+          <h1 className="hidden sm:block">Sign Out</h1>
         </label>
       ) : (
         <label
-          className="flex flex-row justify-center w-[150px] gap-2 py-3 px-6 rounded-md border-4 border-solid bg-white border-gray-400 cursor-pointer"
-          onClick={() => signIn()}
+          className="flex flex-row items-center justify-center h-14 w-14 sm:w-[150px] gap-2 rounded-md border-4 border-solid bg-white border-gray-400 cursor-pointer"
+          onClick={() => signIn("google")}
         >
           <Image
             src="/images/quiz/login.png"
@@ -79,7 +79,7 @@ export default function NavMenu(props: {
             width="24"
             height="24"
           />
-          <h1>Sign In</h1>
+          <h1 className="hidden sm:block">Sign In</h1>
         </label>
       )}
     </div>
