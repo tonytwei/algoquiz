@@ -71,7 +71,7 @@ export default function NavMenu(props: {
       ) : (
         <label
           className="flex flex-row items-center justify-center h-14 w-14 sm:w-[150px] gap-2 rounded-md border-4 border-solid bg-white border-gray-400 cursor-pointer"
-          onClick={() => signIn()}
+          onClick={() => signIn("google")}
         >
           <Image
             src="/images/quiz/login.png"
