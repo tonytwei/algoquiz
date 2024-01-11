@@ -254,7 +254,7 @@ function QuizWindowSession(props: {
             </div>
 
             {/* answer */}
-            <div className="flex flex-col place-content-between gap-3 sm:gap-0 sm:w-1/2">
+            <div className="flex flex-col border-t-2 border-neutral-800 border-solid sm:border-none pt-3 sm:pt-0 place-content-between gap-3 sm:gap-0 sm:w-1/2">
               <QuizAnswer
                 qData={qData}
                 qPart={qPart}

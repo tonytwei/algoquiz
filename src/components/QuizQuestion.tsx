@@ -13,7 +13,7 @@ export default function QuizQuestion(props: { qData: QData }) {
             <h3>Output: {example.output}</h3>
           </div>
         ))}
-      <ul className="flex flex-col gap-1">
+      <ul className="hidden sm:flex flex-col gap-1">
         <h2>Constraints:</h2>
         {props.qData.constraints &&
           props.qData.constraints.map((constraint, index) => (

@@ -13,7 +13,7 @@ export default function QuizAnswer(props: {
   setShowFilter: any;
 }) {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-1 sm:gap-3">
       <h2>{props.qData.questions[props.qPart].questionText}</h2>
       <form
         id="answer"
