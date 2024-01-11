@@ -23,7 +23,7 @@ export default function Header(params: { showBackground: boolean }) {
               height="48"
               priority={true}
             />
-            <h1 className="text-4xl text-teal-300">AlgoQuiz</h1>
+            <h1 className="text-4xl text-teal-300 hidden sm:block">AlgoQuiz</h1>
           </div>
         </Link>
         <div className="flex flex-row items-center">

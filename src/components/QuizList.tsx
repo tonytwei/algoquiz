@@ -14,7 +14,7 @@ export default function QuizList(props: {
 
   return (
     <div
-      className={`text-white flex flex-col w-vw h-vh items-center pt-[5vh] gap-4
+      className={`text-white flex flex-col w-vw h-vh items-center gap-4
       ${props.useOverlay ? "fixed inset-0 bg-black/50" : ""}`}
     >
       <table className="bg-overlay font-normal rounded-md">

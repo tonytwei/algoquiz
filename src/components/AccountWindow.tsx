@@ -126,7 +126,7 @@ function AccountWindowSession(props: {
   };
 
   return (
-    <div className="w-full max-w-[1000px] pt-8">
+    <div className="flex flex-col w-full max-w-[1000px] pt-5 sm:pt-8 gap-5 sm:gap-8">
       <AccountMenu
         inSession={session ? true : false}
         showSaved={showSaved}
