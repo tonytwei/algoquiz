@@ -3,7 +3,7 @@ import { QData } from "@/types/Question";
 
 export default function QuizQuestion(props: { qData: QData }) {
   return (
-    <div className="flex flex-col w-1/2 gap-3">
+    <div className="flex flex-col gap-3">
       <h2>{props.qData.description}</h2>
       {props.qData.examples &&
         props.qData.examples.map((example, index) => (
@@ -19,7 +19,7 @@ export default function QuizQuestion(props: { qData: QData }) {
           props.qData.constraints.map((constraint, index) => (
             <li
               key={index}
-              className="bg-stone-800 w-max max-w-full ml-5 py-1 px-3 rounded-md list-disc text-sm"
+              className="bg-stone-800 ml-5 py-1 px-3 rounded-md list-disc text-sm"
             >
               {constraint}
             </li>

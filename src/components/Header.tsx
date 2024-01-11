@@ -64,11 +64,9 @@ export default function Header(params: { showBackground: boolean }) {
 
         {/* nav overlay */}
         <div
-          className={`${
-            showOverlay ? "absolute" : "hidden"
-          } inset-0 bg-black/50 w-full h-full py-8 px-10`}
+          className={`${showOverlay ? "fixed" : "hidden"} inset-0 bg-black/60`}
         >
-          <ul className="flex flex-col items-end gap-5">
+          <ul className="flex flex-col items-end gap-5 py-8 px-8 w-1/2 h-full float-right">
             <li>
               <button onClick={() => setShowOverlay(false)}>
                 <Image

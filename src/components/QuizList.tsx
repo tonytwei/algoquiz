@@ -14,14 +14,18 @@ export default function QuizList(props: {
 
   return (
     <div
-      className={`text-white flex flex-col w-vw h-vh items-center py-8 gap-4
-      ${props.useOverlay ? "absolute inset-0 bg-black/50" : ""}`}
+      className={`text-white flex flex-col w-vw h-vh items-center pt-[5vh] gap-4
+      ${props.useOverlay ? "fixed inset-0 bg-black/50" : ""}`}
     >
       <table className="bg-overlay font-normal rounded-md">
         <thead>
           <tr>
-            <th className="py-2 px-4 font-normal">Saved</th>
-            <th className="py-2 px-4 font-normal">Completed</th>
+            <th className="py-2 px-4 font-normal hidden sm:table-cell">
+              Saved
+            </th>
+            <th className="py-2 px-4 font-normal hidden sm:table-cell">
+              Completed
+            </th>
             <th className="py-2 px-4 font-normal">Problem</th>
             <th className="py-2 px-4 font-normal">Difficulty</th>
           </tr>
@@ -35,7 +39,7 @@ export default function QuizList(props: {
                 onClick={() => router.push(`/quiz/${question.id}`)}
                 className="h-10 cursor-pointer hover:bg-gray-300 hover:bg-opacity-20 border-t-2 border-gray-400"
               >
-                <td>
+                <td className="hidden sm:table-cell">
                   <div className="h-full w-full flex items-center justify-center">
                     <input
                       type="checkbox"
@@ -50,7 +54,7 @@ export default function QuizList(props: {
                     />
                   </div>
                 </td>
-                <td>
+                <td className="hidden sm:table-cell">
                   <div className="h-full w-full flex items-center justify-center">
                     <input
                       type="checkbox"
@@ -69,7 +73,7 @@ export default function QuizList(props: {
                     />
                   </div>
                 </td>
-                <td className="text-left">{question.title}</td>
+                <td className="text-left pl-4 sm:pl-0">{question.title}</td>
                 <td className={`${diffColor} text-center`}>
                   {diffMap.get(question.difficulty)}
                 </td>

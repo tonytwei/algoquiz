@@ -226,7 +226,7 @@ function QuizWindowSession(props: {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-row w-full max-w-[1000px] justify-center px-5 py-8 h-max md:gap-5">
+      <div className="flex flex-row max-w-[1000px] justify-center px-5 py-8 md:gap-5">
         {showList && (
           <QuizList
             qList={qList}
@@ -248,11 +248,13 @@ function QuizWindowSession(props: {
         {/* quiz window */}
         <div className="flex flex-col bg-overlay h-min rounded-md p-6 gap-4 text-white">
           <QuizHeader qData={qData} />
-          <div className="flex flex-row w-full gap-3">
-            <QuizQuestion qData={qData} />
+          <div className="flex flex-col sm:flex-row w-full gap-3">
+            <div className="sm:w-1/2">
+              <QuizQuestion qData={qData} />
+            </div>
 
             {/* answer */}
-            <div className="flex flex-col w-1/2 place-content-between">
+            <div className="flex flex-col place-content-between gap-3 sm:gap-0 sm:w-1/2">
               <QuizAnswer
                 qData={qData}
                 qPart={qPart}

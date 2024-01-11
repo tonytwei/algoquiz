@@ -28,7 +28,7 @@ export default function Home() {
         <div className="absolute custom-gradient left-0 -top-10 -z-10 w-full h-[80vh] skew-y-3" />
         <Header showBackground={false} />
         <div className="flex flex-row w-full max-w-[1000px] h-[70vh] justify-around">
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col max-w-[80vw] justify-center">
             <h3 className="text-teal-300 -my-2">Welcome to</h3>
             <h1 className="text-blue-200 text-7xl">AlgoQuiz</h1>
             <h2 className="text-[#9aaecb] text-3xl">
@@ -60,7 +60,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-row justify-center w-full h-max bg-white">
-        <div className="flex flex-col max-w-[1000px] text-center">
+        <div className="flex flex-col w-[95vw] max-w-[1000px] text-center">
           <h1 className="text-teal-300">Land your dream job</h1>
           <h3 className="text-[#8698b1]">
             Our goal is to prepare you for any technical interview question so
