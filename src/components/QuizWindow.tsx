@@ -23,6 +23,8 @@ function QuizWindowSession(props: {
   const [qData, setQData] = useState<QData>(props.qData);
   const [error, setError] = useState(() => "");
 
+  const [qWrongAnswers, setQWrongAnswers] = useState<string[]>(() => []);
+
   const [qPart, setQPart] = useState<number>(0);
   const [qPartCompleted, setQPartCompleted] = useState<boolean>(false);
 
@@ -68,6 +70,8 @@ function QuizWindowSession(props: {
   });
   const onSubmitAnswer: SubmitHandler<QAnswer> = (answerData) => {
     if (answerData.answer != qData!.questions[qPart].answer) {
+      setQWrongAnswers([...qWrongAnswers, answerData.answer.toString()]);
+      console.log(qWrongAnswers);
       return;
     }
     if (qPart + 1 == qData!.questions.length) {
@@ -217,6 +221,7 @@ function QuizWindowSession(props: {
   };
 
   const nextQuestionPart = () => {
+    setQWrongAnswers([]);
     setQPart(qPart + 1);
     resetAnswer();
     setQPartCompleted(false);
@@ -226,7 +231,7 @@ function QuizWindowSession(props: {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-row max-w-[1000px] justify-center px-5 py-8 md:gap-5">
+      <div className="flex flex-row max-w-[1000px] justify-center px-5 py-5 sm:py-8 md:gap-5">
         {showList && (
           <QuizList
             qList={qList}
@@ -246,7 +251,7 @@ function QuizWindowSession(props: {
         />
 
         {/* quiz window */}
-        <div className="flex flex-col bg-overlay h-min rounded-md p-6 gap-4 text-white">
+        <div className="flex flex-col bg-overlay h-min rounded-md p-6 gap-2 sm:gap-4 text-white">
           <QuizHeader qData={qData} />
           <div className="flex flex-col sm:flex-row w-full gap-3">
             <div className="sm:w-1/2">
@@ -254,13 +259,14 @@ function QuizWindowSession(props: {
             </div>
 
             {/* answer */}
-            <div className="flex flex-col border-t-2 border-neutral-800 border-solid sm:border-none pt-3 sm:pt-0 place-content-between gap-3 sm:gap-0 sm:w-1/2">
+            <div className="flex flex-col place-content-between gap-3 sm:gap-0 sm:w-1/2">
               <QuizAnswer
                 qData={qData}
                 qPart={qPart}
                 onSubmitAnswer={onSubmitAnswer}
                 handleSubmitAnswer={handleSubmitAnswer}
                 registerAnswer={registerAnswer}
+                qWrongAnswers={qWrongAnswers}
                 qCompleted={qCompleted}
                 nextQuestionPart={nextQuestionPart}
                 qPartCompleted={qPartCompleted}

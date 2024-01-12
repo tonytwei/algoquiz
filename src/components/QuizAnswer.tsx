@@ -7,6 +7,7 @@ export default function QuizAnswer(props: {
   onSubmitAnswer: any;
   handleSubmitAnswer: any;
   registerAnswer: any;
+  qWrongAnswers: any;
   qCompleted: any;
   nextQuestionPart: any;
   qPartCompleted: any;
@@ -31,7 +32,12 @@ export default function QuizAnswer(props: {
               type="radio"
               value={index}
               {...props.registerAnswer("answer")}
-              className="checkbox-round checkbox-unchecked checkbox-checked-green"
+              className={`checkbox-round ${
+                props.qWrongAnswers.includes(option)
+                  ? "checkbox-unchecked-red"
+                  : "checkbox-unchecked checkbox-checked-green"
+              }`}
+              disabled={props.qCompleted || props.qPartCompleted}
             />
             <label htmlFor={option}>{option}</label>
           </label>

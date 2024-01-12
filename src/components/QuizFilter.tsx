@@ -20,7 +20,7 @@ export default function QuizFilter(props: {
   return (
     <div
       className={`${
-        props.showFilter ? "fixed inset-0 bg-black/50 pt-[5vh] px-10" : ""
+        props.showFilter ? "fixed inset-0 bg-black/50 pt-[10vh] px-10" : ""
       }`}
     >
       <div
@@ -53,7 +53,7 @@ export default function QuizFilter(props: {
               </label>
             ))}
           </div>
-          <div>
+          <div className="hidden sm:block">
             <h2 className="text-teal-300 text-xl">TOPICS:</h2>
             {topics.map((topic, index) => (
               <label

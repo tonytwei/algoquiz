@@ -22,6 +22,8 @@ const config: Config = {
         "accent-dark-lime": "#40a190",
         "accent-yellow": "#f8ea5e",
         "accent-dark-yellow": "#d0b83b",
+        "accent-red": "#d6555e",
+        "accent-dark-red": "#a1404b",
       },
     },
   },
