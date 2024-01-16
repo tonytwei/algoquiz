@@ -32,7 +32,7 @@ export const topicMap = new Map<String, String>([
   ["dynamicProgramming", "DP"],
   ["greedy", "Greedy"],
 ]);
-// TODO: implement saved completed functionality
+
 export const sets: Array<string> = ["all", "gdsc-array"];
 export const setMap = new Map<String, String>([
   ["all", "All"],

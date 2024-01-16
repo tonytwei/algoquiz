@@ -29,7 +29,6 @@ export default async function Home({ params }: { params: { id: string[] } }) {
     });
 
   // user data
-  // TODO: pass user email to QuizWindow for saving/completing
   const session = await getServerSession();
   let savedList: string[] = [];
   let completedList: string[] = [];
