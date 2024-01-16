@@ -19,7 +19,7 @@ export default function QuizQuestion(props: { qData: QData }) {
           props.qData.constraints.map((constraint, index) => (
             <li
               key={index}
-              className="bg-stone-800 ml-5 py-1 px-3 rounded-md list-disc text-sm"
+              className="bg-stone-800 ml-5 py-1 px-3 rounded-md list-disc text-sm w-max"
             >
               {constraint}
             </li>

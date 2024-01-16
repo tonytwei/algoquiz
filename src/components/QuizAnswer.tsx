@@ -33,7 +33,7 @@ export default function QuizAnswer(props: {
               value={index}
               {...props.registerAnswer("answer")}
               className={`checkbox-round ${
-                props.qWrongAnswers.includes(option)
+                props.qWrongAnswers.includes(index)
                   ? "checkbox-unchecked-red"
                   : "checkbox-unchecked checkbox-checked-green"
               }`}
