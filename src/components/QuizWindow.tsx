@@ -71,7 +71,6 @@ function QuizWindowSession(props: {
   const onSubmitAnswer: SubmitHandler<QAnswer> = (answerData) => {
     if (answerData.answer != qData!.questions[qPart].answer) {
       setQWrongAnswers([...qWrongAnswers, answerData.answer.toString()]);
-      console.log(qWrongAnswers);
       return;
     }
     if (qPart + 1 == qData!.questions.length) {
