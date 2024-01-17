@@ -1,6 +1,6 @@
 <div align="center">
     <img src="./public/images/logo.png" />
-    <h3>AlgoQuiz</h3>
+    <h1>AlgoQuiz</h1>
     <p>Algorithm & Data Structures Quiz App</p>
 </div>
 
