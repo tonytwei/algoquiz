@@ -1,6 +1,8 @@
 <div align="center">
-    <img src="./public/images/logo.png" />
-    <h1>AlgoQuiz</h1>
+    <h1 style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+        <img src="./public/images/logo.png" />
+        <p>AlgoQuiz</p>
+    </h1>
     <p>Algorithm & Data Structures Quiz App</p>
 </div>
 
