@@ -1,8 +1,6 @@
 <div align="center">
-    <h1 style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-        <img src="./public/images/logo.png" />
-        <p>AlgoQuiz</p>
-    </h1>
+    <img src="./public/images/logo.png" />
+    <h1>AlgoQuiz</h1>
     <p>Algorithm & Data Structures Quiz App</p>
 </div>
 
@@ -37,6 +35,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - **MongoDB:** MongoDB is used as the database for storing the questions and user data.
 - **TypeScript:** TypeScript is used for static typing, improving the reliability and maintainability of the code.
 - **AWS Amplify:** The app is hosted on AWS Amplify, providing a scalable and reliable hosting solution.
+
+## 📸 Screenshots
+
+![alt text](./public/images/index/quiz_ui.png)
+![alt text](./public/images/index/quiz_mobile.png)
 
 ## 🧾 License
 
