@@ -13,44 +13,44 @@ export default async function Home({ params }: { params: { id: string[] } }) {
   }/api/question?${questionNum.map((id) => `id=${id}`).join("&")}`;
   let qData = {} as QData;
   let qSaved: boolean = false;
-  await fetch(questionQuery, {
+  const questionPromise = fetch(questionQuery, {
     method: "GET",
     headers: {
       accept: "application/json",
     },
     cache: "no-store",
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      qData = data.response[0];
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  }).then((res) => res.json());
 
   // user data
   const session = await getServerSession();
   let savedList: string[] = [];
   let completedList: string[] = [];
+  let userPromise;
   if (session?.user?.email) {
     const userQuery: string = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${session.user.email}`;
-    await fetch(userQuery, {
+    userPromise = fetch(userQuery, {
       method: "GET",
       headers: {
         accept: "application/json",
       },
       cache: "no-store",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        savedList = data.response.saved;
-        completedList = data.response.completed;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => res.json());
+  }
 
-    qSaved = savedList.includes(questionNum[0]);
+  try {
+    const [questionData, userData] = await Promise.all([
+      questionPromise,
+      userPromise,
+    ]);
+
+    qData = questionData.response[0];
+    if (userData) {
+      savedList = userData.response.saved;
+      completedList = userData.response.completed;
+      qSaved = savedList.includes(questionNum[0]);
+    }
+  } catch (error) {
+    console.log(error);
   }
 
   return (
