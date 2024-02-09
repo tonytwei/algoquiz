@@ -1,5 +1,4 @@
 <div align="center">
-    <img src="./public/images/logo.png" />
     <h1>AlgoQuiz</h1>
     <p>Algorithm & Data Structures Quiz App</p>
 </div>
@@ -36,7 +35,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - **TypeScript:** TypeScript is used for static typing, improving the reliability and maintainability of the code.
 - **AWS Amplify:** The app is hosted on AWS Amplify, providing a scalable and reliable hosting solution.
 
-## 📸 Screenshots
+## 📸 Project Preview
 
 ![alt text](./public/images/index/quiz_ui.png)
 ![alt text](./public/images/index/quiz_mobile.png)
