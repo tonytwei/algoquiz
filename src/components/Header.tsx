@@ -29,11 +29,6 @@ export default function Header(params: { showBackground: boolean }) {
         <div className="flex flex-row items-center">
           {/* nav bar */}
           <ul className="flex-row items-center gap-5 hidden md:flex">
-            {/* <li>
-              <Link href="/">
-                <h1 className="text-xl text-stone-300 font-medium">HOME</h1>
-              </Link>
-            </li> */}
             <li>
               <a href="/quiz">
                 <h1 className="text-xl text-stone-300 font-medium">PRACTICE</h1>
