@@ -5,6 +5,7 @@ export const diffMap = new Map<String, String>([
   ["hard", "Hard"],
 ]);
 export const topics: Array<string> = [
+  "hashing",
   "array",
   "twoPointers",
   "slidingWindow",
@@ -19,6 +20,7 @@ export const topics: Array<string> = [
   "greedy",
 ];
 export const topicMap = new Map<String, String>([
+  ["hashing", "Hashing"],
   ["array", "Array"],
   ["twoPointers", "Two Pointers"],
   ["slidingWindow", "Sliding Window"],
@@ -33,9 +35,10 @@ export const topicMap = new Map<String, String>([
   ["greedy", "Greedy"],
 ]);
 
-export const sets: Array<string> = ["all", "gdsc-array"];
+export const sets: Array<string> = ["all", "gdsc-sets-maps", "gdsc-array"];
 export const setMap = new Map<String, String>([
   ["all", "All"],
+  ["gdsc-sets-maps", "GDSC: Sets & Maps"],
   ["gdsc-array", "GDSC: Array"],
 ]);
 

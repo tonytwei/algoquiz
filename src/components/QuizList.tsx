@@ -73,7 +73,9 @@ export default function QuizList(props: {
                     />
                   </div>
                 </td>
-                <td className="text-left pl-4 sm:pl-0">{question.title}</td>
+                <td className="text-left pl-4 sm:pl-0">
+                  {question.id + ". " + question.title}
+                </td>
                 <td className={`${diffColor} text-center`}>
                   {diffMap.get(question.difficulty)}
                 </td>
