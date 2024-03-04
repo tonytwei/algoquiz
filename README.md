@@ -1,7 +1,6 @@
-<div align="center">
-    <h1>AlgoQuiz</h1>
-    <p>Algorithm & Data Structures Quiz App</p>
-</div>
+
+<h1>AlgoQuiz</h1>
+<p>Algorithm & Data Structures Quiz App</p>
 
 ## 👨‍💻 What is AlgoQuiz?
 
