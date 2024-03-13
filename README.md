@@ -24,7 +24,7 @@ AlgoQuiz is a platform designed to help you prepare for technical interviews by 
 **Styling:** Tailwind CSS\
 **Backend:** Next.js framework\
 **Database:** MongoDB\
-Hosted via AWS Amplify\
+Hosted via AWS Amplify
 
 ## Project Preview
 
