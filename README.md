@@ -18,7 +18,7 @@ AlgoQuiz is a platform designed to help you prepare for technical interviews by 
 
 ## Technologies Used
 
-[![My Skills](https://skillicons.dev/icons?i=react,tailwind,nextjs,mongodb,ts,aws)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=react,ts,tailwind,nextjs,mongodb,aws)](https://skillicons.dev)
 
 **Frontend:** React with Typescript\
 **Styling:** Tailwind CSS\
