@@ -20,11 +20,11 @@ AlgoQuiz is a platform designed to help you prepare for technical interviews by 
 
 [![My Skills](https://skillicons.dev/icons?i=react,ts,tailwind,nextjs,mongodb,aws)](https://skillicons.dev)
 
-**Frontend:** React with Typescript\
-**Styling:** Tailwind CSS\
-**Backend:** Next.js framework\
-**Database:** MongoDB\
-Hosted via AWS Amplify
+- **Frontend:** React with Typescript\
+- **Styling:** Tailwind CSS\
+- **Backend:** Next.js framework\
+- **Database:** MongoDB\
+- Hosted via AWS Amplify
 
 ## Project Preview
 
